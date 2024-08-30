@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://bpt7tljaiill0"]
+
+[ext_resource type="Script" path="res://Scenes/trees.gd" id="1_20uk8"]
+[ext_resource type="Texture2D" uid="uid://cfh441exrese8" path="res://Assets/treePine.png" id="2_n16d7"]
+[ext_resource type="Texture2D" uid="uid://b1yqi1qcdsn2b" path="res://Assets/rockGrassDown.png" id="3_6l1js"]
+[ext_resource type="AudioStream" uid="uid://c5tle5gffhd3u" path="res://Assets/spaceTrash4.ogg" id="4_ldaan"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oqn22"]
+size = Vector2(20, 240.5)
+
+[node name="Trees" type="Area2D" groups=["trees"]]
+script = ExtResource("1_20uk8")
+
+[node name="Lower" type="Sprite2D" parent="."]
+position = Vector2(-362, 454.5)
+scale = Vector2(1, 2.45276)
+texture = ExtResource("2_n16d7")
+offset = Vector2(380, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(3.05176e-05, 131.999)
+scale = Vector2(1, 2.22838)
+polygon = PackedVector2Array(-2, -108, 6, -107, 17, -211, 23, -210, 43, -344, -63, -344)
+
+[node name="Upper" type="Sprite2D" parent="."]
+position = Vector2(-10, -380.25)
+scale = Vector2(1, 2.29916)
+texture = ExtResource("3_6l1js")
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="."]
+position = Vector2(0, -86.8629)
+scale = Vector2(1, 2.44812)
+polygon = PackedVector2Array(0, 93, 71, 294, 22, 297, 33, 346, 0, 343, 9, 298, -35, 303)
+
+[node name="ScoreArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScoreArea"]
+position = Vector2(30, 18)
+shape = SubResource("RectangleShape2D_oqn22")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_ldaan")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="ScoreArea" to="." method="_on_score_area_body_entered"]

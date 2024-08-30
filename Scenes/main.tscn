@@ -1,0 +1,63 @@
+[gd_scene load_steps=7 format=3 uid="uid://bgk2gj5ly2meu"]
+
+[ext_resource type="Script" path="res://Scenes/main.gd" id="1_cwxkw"]
+[ext_resource type="PackedScene" uid="uid://bpt7tljaiill0" path="res://Scenes/trees.tscn" id="2_j7wro"]
+[ext_resource type="PackedScene" uid="uid://bi61iv4lluu14" path="res://Scenes/plane.tscn" id="3_261r2"]
+[ext_resource type="Texture2D" uid="uid://b7vcmgaiy7ve3" path="res://Assets/backgroundEmpty.png" id="3_dkult"]
+[ext_resource type="PackedScene" uid="uid://bsyw7ytwt5gep" path="res://Scenes/ground.tscn" id="3_wdk17"]
+[ext_resource type="PackedScene" uid="uid://dtfbe3u40q4e3" path="res://Scenes/game_over.tscn" id="6_84nhn"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_cwxkw")
+tree_scene = ExtResource("2_j7wro")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(68.5, 117.75)
+scale = Vector2(0.84375, 0.912109)
+texture = ExtResource("3_dkult")
+offset = Vector2(432, 384)
+
+[node name="Ground" parent="." node_paths=PackedStringArray("explosion") instance=ExtResource("3_wdk17")]
+explosion = NodePath("../Plane/AnimatedSprite2D")
+
+[node name="Plane" parent="." instance=ExtResource("3_261r2")]
+
+[node name="TreeTimer" type="Timer" parent="."]
+
+[node name="HighScore" type="Label" parent="."]
+z_index = 1
+offset_left = 257.0
+offset_top = 491.0
+offset_right = 538.0
+offset_bottom = 546.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 5
+theme_override_font_sizes/font_size = 40
+text = "HIGH SCORE: 0"
+horizontal_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="."]
+z_index = 1
+offset_left = 342.0
+offset_top = 2.0
+offset_right = 512.0
+offset_bottom = 57.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 5
+theme_override_font_sizes/font_size = 40
+text = "SCORE: 0"
+horizontal_alignment = 1
+
+[node name="GameOver" parent="." instance=ExtResource("6_84nhn")]
+
+[connection signal="hit" from="Ground" to="." method="_on_ground_hit"]
+[connection signal="timeout" from="TreeTimer" to="." method="_on_tree_timer_timeout"]
+[connection signal="restart" from="GameOver" to="." method="_on_game_over_restart"]
+
+[editable path="Plane"]

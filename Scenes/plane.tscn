@@ -1,0 +1,128 @@
+[gd_scene load_steps=22 format=3 uid="uid://bi61iv4lluu14"]
+
+[ext_resource type="Script" path="res://Scenes/plane.gd" id="1_w806g"]
+[ext_resource type="Texture2D" uid="uid://b55a3alocu5ju" path="res://Assets/planeRed1.png" id="2_cj32a"]
+[ext_resource type="Texture2D" uid="uid://dwootxirpuryk" path="res://Assets/planeRed2.png" id="3_mgfn7"]
+[ext_resource type="Texture2D" uid="uid://d0w1ikdbnkydc" path="res://Assets/planeRed3.png" id="4_phtno"]
+[ext_resource type="Texture2D" uid="uid://dd5ajpdfkpesw" path="res://Assets/tapLeft.png" id="5_fn716"]
+[ext_resource type="Texture2D" uid="uid://dbwlrow2ol0e3" path="res://Assets/tap.png" id="6_jnpsl"]
+[ext_resource type="Texture2D" uid="uid://dqy4g5efxl6un" path="res://Assets/tapTick.png" id="7_ulxwi"]
+[ext_resource type="AudioStream" uid="uid://ci1a665wnpljb" path="res://Assets/idle-plane-engine.ogg" id="8_nlqd1"]
+[ext_resource type="Texture2D" uid="uid://bl4l0brk6dqkv" path="res://Assets/explosion/explosion00.png" id="9_fwlph"]
+[ext_resource type="Texture2D" uid="uid://bn1worc0mpkgc" path="res://Assets/explosion/explosion01.png" id="10_3ii0m"]
+[ext_resource type="Texture2D" uid="uid://b60of1xvc08mt" path="res://Assets/explosion/explosion02.png" id="11_1xgeb"]
+[ext_resource type="Texture2D" uid="uid://6lwcr5570kqt" path="res://Assets/explosion/explosion03.png" id="12_f1gxu"]
+[ext_resource type="Texture2D" uid="uid://dypm30wud2fr3" path="res://Assets/explosion/explosion04.png" id="13_254ep"]
+[ext_resource type="Texture2D" uid="uid://c30by4km4wk6s" path="res://Assets/explosion/explosion05.png" id="14_4mt50"]
+[ext_resource type="Texture2D" uid="uid://dma378lm0qob7" path="res://Assets/explosion/explosion06.png" id="15_52b12"]
+[ext_resource type="Texture2D" uid="uid://bglj7w60niyuc" path="res://Assets/explosion/explosion07.png" id="16_raqpj"]
+[ext_resource type="Texture2D" uid="uid://5ch0yrvt7skf" path="res://Assets/explosion/explosion08.png" id="17_oov4h"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s2ja2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_cj32a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_mgfn7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_phtno")
+}],
+"loop": true,
+"name": &"flying",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ja5w6"]
+radius = 37.0
+height = 106.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lbv6m"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_jnpsl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ulxwi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_grfi4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_fwlph")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_3ii0m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_1xgeb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_f1gxu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_254ep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_4mt50")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_52b12")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_raqpj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_oov4h")
+}],
+"loop": true,
+"name": &"explosion",
+"speed": 5.0
+}]
+
+[node name="Plane" type="CharacterBody2D"]
+script = ExtResource("1_w806g")
+
+[node name="PlaneAnimation" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_s2ja2")
+animation = &"flying"
+frame = 2
+frame_progress = 0.907463
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3, 0)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_ja5w6")
+
+[node name="Tap" type="Sprite2D" parent="."]
+position = Vector2(103, 3)
+texture = ExtResource("5_fn716")
+
+[node name="TapAnimation" type="AnimatedSprite2D" parent="."]
+position = Vector2(112, 41)
+sprite_frames = SubResource("SpriteFrames_lbv6m")
+autoplay = "default"
+frame = 1
+frame_progress = 0.449864
+
+[node name="PlaneSound" type="AudioStreamPlayer2D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("8_nlqd1")
+volume_db = -15.0
+autoplay = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(-15, -3)
+scale = Vector2(0.156371, 0.145411)
+sprite_frames = SubResource("SpriteFrames_grfi4")
+animation = &"explosion"
